@@ -12,9 +12,9 @@ const process = require('process')
 readDir('res')
 
 function readDir(dirName) {
-	fs.opendir(dirName, 'utf-8', (err, dir) => {
+	fs.opendir(dirName, 'utf-8', (err, dirent) => {
 		if (err) throw err
-		readDirEntry(dir)
+		readDirEntry(dirent)
 	})
 }
 
