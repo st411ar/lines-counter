@@ -22,9 +22,8 @@ function readDirEntry(dir) {
 	dir.read((err, dirent) => {
 		if (err) throw err
 		if (dirent) {
-			let dirPath = dir.path
-			if (dirent.isDirectory()) readSubDir(dirPath, dirent)
-			if (dirent.isFile()) readFile(dirPath, dirent)
+			if (dirent.isDirectory()) readSubDir(dir.path, dirent)
+			if (dirent.isFile()) readFile(dir.path, dirent)
 			readDirEntry(dir)
 		} else {
 			console.log('Directory ' + dir.path + ' has bean read')
