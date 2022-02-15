@@ -22,8 +22,8 @@ function readDirEntry(dir) {
 	dir.read((err, dirent) => {
 		if (err) throw err
 		if (dirent) {
-			if (dirent.isDirectory()) readSubDir(dir.path, dirent)
-			if (dirent.isFile()) readFile(dir.path, dirent)
+			if (dirent.isFile()) readFile(dir.path, dirent.name)
+			if (dirent.isDirectory()) readSubDir(dir.path, dirent.name)
 			readDirEntry(dir)
 		} else {
 			console.log('Directory ' + dir.path + ' has bean read')
@@ -31,19 +31,14 @@ function readDirEntry(dir) {
 	})
 }
 
-function readSubDir(dirPath, dirent) {
+function readSubDir(dirPath, name) {
 	dirsNumber++
-	let subDirName = dirent.name
-	let subDirPath = dirPath + '/' + subDirName
-	console.log('sub-dir path is "' + subDirPath + '"')
-	readDir(subDirPath)
+	readDir(dirPath + '/' + name)
 }
 
-function readFile(dirPath, dirent) {
+function readFile(filePath, name) {
 	filesNumber++
-	let fileName = dirent.name
-	let filePath = path.join(__dirname, dirPath, fileName)
-	readLines(filePath)
+	readLines(path.join(__dirname, filePath, name))
 }
 
 function readLines(filePath) {
@@ -67,5 +62,3 @@ process.on('exit', (code) => {
 	let seconds = (new Date() - startTime) / 1000
 	console.log('elapsed time ' + seconds + ' seconds')
 });
-
-console.log('program stop')
